@@ -1,32 +1,35 @@
 # Firefox Update Control
 
-Manage Firefox updates (installed + portable).
+Three ways to control Firefox updates (installed + portable).
 
-## Files
+## 1. Batch Scripts (Registry)
 
-| Type     | Disable                    | Enable                     |
-|----------|----------------------------|----------------------------|
-| **Batch** | `disable_firefox_update.bat` | `enable_firefox_update.bat` |
-| **Registry** | `disable_firefox_updates.reg` | `enable_firefox_updates.reg` |
-| **JSON**  | `policies.json`            | -                          |
+Auto-modify registry via `.bat` files:
 
-## Usage
+- `disable_firefox_update.bat` – disables updates (`DisableAppUpdate = 1`)
+- `enable_firefox_update.bat` – enables updates (`DisableAppUpdate = 0`)
+
+**Path:** `HKLM\Software\Policies\Mozilla\Firefox\DisableAppUpdate` [web:1]
+
+## 2. REG Files (Registry Import)
+
+Double-click ready `.reg` files:
+
+- `disable_firefox_updates.reg` – disables updates
+- `enable_firefox_updates.reg` – enables updates
+
+**Same registry path:** `HKLM\Software\Policies\Mozilla\Firefox\DisableAppUpdate` [web:1]
+
+## 3. policies.json (No Registry)
+
+Place in Firefox `distribution` folder:
 
 **Installed Firefox:**
-Registry/Batch: HKLM\Software\Policies\Mozilla\Firefox\DisableAppUpdate
-JSON: C:\Program Files\Mozilla Firefox\distribution\policies.json
-
+`C:\Program Files\Mozilla Firefox\distribution\policies.json`
 
 **Portable Firefox:**
-JSON: FirefoxPortable\App\Firefox64\distribution\policies.json
-
-**policies.json:**
-{"policies":{"DisableAppUpdate":true}}
+`FirefoxPortable\App\Firefox64\distribution\policies.json`
 
 
-## Verify
-Settings → General → "Updates disabled by your administrator" [web:1]
-
-## Revert
-reg delete "HKLM\Software\Policies\Mozilla\Firefox" /v "DisableAppUpdate" /f /reg:32
-rmdir /s "*/distribution"
+**Content:**
+`{"policies":{"DisableAppUpdate":true}}`
